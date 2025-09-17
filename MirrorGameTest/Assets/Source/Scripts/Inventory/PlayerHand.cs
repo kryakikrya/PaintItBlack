@@ -14,7 +14,7 @@ public class PlayerHand : NetworkBehaviour
     [SerializeField] private Transform _handSocket;
 
     private PlayerInventory _inventory;
-    [SyncVar(hook = nameof(OnSelectedSlotChanged))] private int _selectedSlot = 0; // to do: UniRx UI changes
+    [SyncVar] private int _selectedSlot = 0; // to do: UniRx UI changes
 
     private void Awake()
     {
