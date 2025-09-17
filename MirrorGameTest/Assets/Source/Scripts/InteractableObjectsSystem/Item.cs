@@ -2,12 +2,10 @@ using UnityEngine;
 
 public abstract class Item : InteractableObject
 {
-    public override void Interact(GameObject player)
+    public override void OnServerInteract(GameObject player)
     {
-        // to do: take the item
+        player.GetComponent<PlayerInventory>().TryPickUp(this);
     }
 
-    public virtual void Use() { }
-
-    public virtual void Throw() { }
+    public abstract void Use(GameObject player);
 }

@@ -12,10 +12,12 @@ using UnityEngine;
 
             int count = registry.Tags.Count;
             string[] options = new string[count];
+
             for (int i = 0; i < count; i++)
                 options[i] = registry.Tags[i].TagName;
 
             int currentIndex = -1;
+
             for (int i = 0; i < count; i++)
                 if (registry.Tags[i] == current) { currentIndex = i; break; }
 
