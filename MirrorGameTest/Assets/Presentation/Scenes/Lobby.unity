@@ -367,7 +367,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  _tags: []
+  _tags:
+  - {fileID: 11400000, guid: 5b56bee4bb95c7a448bd71344cd404fa, type: 2}
 --- !u!114 &1009738230
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
 
     private int _currentSlotId;
 
-    private List<Item> _items;
+    private List<Item> _items = new List<Item>(4);
 
     public void TryPickUp(Item item)
     {
