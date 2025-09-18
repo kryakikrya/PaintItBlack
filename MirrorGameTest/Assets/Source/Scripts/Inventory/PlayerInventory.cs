@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private PlayerHand _hand;
     private NetworkIdentity _handItem;
 
-    private List<Item> _items = new List<Item>(new Item[4]);
+    private Item[] _items = new Item[4];
 
     public void PickUp(Item item)
     {
