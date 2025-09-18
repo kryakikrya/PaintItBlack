@@ -14,7 +14,7 @@ public abstract class InteractableObject : NetworkBehaviour
     [Server] public virtual void OnServerInteract(GameObject player) { } // to do: change to the player's script
 
     [Command(requiresAuthority = false)]
-    public void CommandInteract(NetworkIdentity player)
+    public void CmdInteract(NetworkIdentity player)
     {
         if (_canInteract)
         {

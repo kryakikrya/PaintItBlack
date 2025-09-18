@@ -16,7 +16,9 @@ public class PlayerInteractor : NetworkBehaviour
         {
             if (CheckForInteractable())
             {
-                ComandInteract(_currentTarget.netIdentity);
+                print("I tried 3");
+                CmdInteract(_currentTarget.netIdentity);
+                print("I tried 4");
             }
         }
     }
@@ -45,13 +47,13 @@ public class PlayerInteractor : NetworkBehaviour
     }
 
     [Command]
-    private void ComandInteract(NetworkIdentity targetNetId)
+    private void CmdInteract(NetworkIdentity targetNetId)
     {
         if (targetNetId == null) return;
 
         InteractableObject interactable = targetNetId.GetComponent<InteractableObject>();
 
-        if (interactable != null && interactable.GetCanInteract())
+        if (interactable != null) //&& interactable.GetCanInteract()
         {
             interactable.OnServerInteract(gameObject);
         }

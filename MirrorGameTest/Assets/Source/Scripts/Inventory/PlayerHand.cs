@@ -6,37 +6,55 @@ public class PlayerHand : NetworkBehaviour
 {
     private const int HandId = 0;
 
-    [SerializeField] private readonly KeyCode _slotKey1 = KeyCode.Alpha1;
-    [SerializeField] private readonly KeyCode _slotKey2 = KeyCode.Alpha2;
-    [SerializeField] private readonly KeyCode _slotKey3 = KeyCode.Alpha3;
-    [SerializeField] private readonly KeyCode _slotKey4 = KeyCode.Alpha4;
+    [SerializeField] private KeyCode _slotKey1 = KeyCode.Alpha1;
+    [SerializeField] private KeyCode _slotKey2 = KeyCode.Alpha2;
+    [SerializeField] private KeyCode _slotKey3 = KeyCode.Alpha3;
+    [SerializeField] private KeyCode _slotKey4 = KeyCode.Alpha4;
 
     [SerializeField] private Transform _handSocket;
 
     private PlayerInventory _inventory;
-    [SyncVar] private int _selectedSlot = 0; // to do: UniRx UI changes
+
+    [SyncVar(hook = nameof(OnSelectedSlotHook))]
+    private int _selectedSlot;
 
     private void Awake()
     {
+        _selectedSlot = HandId;
         _inventory = GetComponent<PlayerInventory>();
     }
      
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) _selectedSlot = HandId;
-        if (Input.GetKeyDown(KeyCode.Alpha2)) _selectedSlot = 1;
-        if (Input.GetKeyDown(KeyCode.Alpha3)) _selectedSlot = 2;
-        if (Input.GetKeyDown(KeyCode.Alpha4)) _selectedSlot = 3;
+        if (!isLocalPlayer) return;
+
+        if (Input.GetKeyDown(_slotKey1)) CmdSelectSlot(HandId);
+        if (Input.GetKeyDown(_slotKey2)) CmdSelectSlot(1);
+        if (Input.GetKeyDown(_slotKey3)) CmdSelectSlot(2);
+        if (Input.GetKeyDown(_slotKey4)) CmdSelectSlot(3);
     }
+
+    public int GetSelectedSlot() => _selectedSlot;
 
     [Command]
-    private void OnSelectedSlotChanged()
+    public void CmdSelectSlot(int newSlot)
     {
-        if (_selectedSlot != HandId && _inventory.GetItemById(HandId) != null)
+        if (newSlot < 0 || newSlot > 3) return;
+
+        if (_selectedSlot == HandId && newSlot != HandId)
         {
-            _inventory.DropItemById(HandId);
+            if (_inventory.GetItemById(HandId) != null)
+            {
+                _inventory.DropItemById(HandId);
+            }
         }
 
-        GameObject item = _inventory.GetItemById(_selectedSlot).gameObject;
+        _selectedSlot = newSlot;
     }
+
+    private void OnSelectedSlotHook(int oldValue, int newValue)
+    {
+        // here we need to rig new model to the player's hand
+    }
+
 }

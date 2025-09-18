@@ -3,19 +3,30 @@ using System.Collections.Generic;
 using Mirror;
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private Transform _handSocket;
+    [SerializeField] private PlayerHand _hand;
     private NetworkIdentity _handItem;
 
-    private List<Item> _items = new List<Item>(4);
+    private List<Item> _items = new List<Item>(new Item[4]);
 
-    public void TryPickUp(Item item, int slotId)
+    public void PickUp(Item item)
     {
-        if (_items[slotId] != null)
+        int id = _hand.GetSelectedSlot();
+
+        print(id);
+
+        if (_items[id] != null)
         {
-            DropItemById(slotId);
+            DropItemById(id);
         }
-        _items[slotId] = item;
-        // to do: swap item in hand here
+
+        _items[id] = item;
+
+        _hand.CmdSelectSlot(id);
+
+        foreach (Item myItem in _items)
+        {
+            print(myItem);
+        }
     }
 
     public void DropItemById(int id)
