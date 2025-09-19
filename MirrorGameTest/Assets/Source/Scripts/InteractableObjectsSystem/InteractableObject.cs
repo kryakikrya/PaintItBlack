@@ -11,7 +11,7 @@ public abstract class InteractableObject : NetworkBehaviour
     [SyncVar] protected bool _canInteract;
 
     [Server] public bool GetCanInteract() => _canInteract;
-    [Server] public virtual void OnServerInteract(GameObject player) { } // to do: change to the player's script
+    [Server] public virtual void OnServerInteract(GameObject player) { }
 
     [Command(requiresAuthority = false)]
     public void CmdInteract(NetworkIdentity player)

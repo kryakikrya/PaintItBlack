@@ -11,6 +11,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Presentation/Scenes/Lobby.unity
     guid: 6f744c1d7ae64384dabc29bec1970b7d
+  - enabled: 1
+    path: Assets/Presentation/Scenes/Bar.unity
+    guid: 132d57155c08808439a26e97aa41e5ef
+  - enabled: 1
+    path: Assets/Presentation/Scenes/Location.unity
+    guid: 10b45398f0e8dd54d8c317f7f4ef16db
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 8cbf876f11c01bf489b9a0a943436011, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

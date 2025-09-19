@@ -1049,7 +1049,7 @@ MonoBehaviour:
   exceptionsDisconnect: 1
   authenticator: {fileID: 0}
   offlineScene: Assets/Presentation/Scenes/MainMenu.unity
-  onlineScene: Assets/Presentation/Scenes/Lobby.unity
+  onlineScene: Assets/Presentation/Scenes/Bar.unity
   offlineSceneLoadDelay: 0
   playerPrefab: {fileID: 5137554079413205963, guid: 18fe9fa2b7136e24bbaf2e66cc502abb, type: 3}
   autoCreatePlayer: 1
@@ -1069,6 +1069,8 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
+  _lobbySceneName: Bar
+  _gameSceneName: Location
   _playerNetworkPrefab: {fileID: -5929234427330687748, guid: 18fe9fa2b7136e24bbaf2e66cc502abb, type: 3}
 --- !u!114 &2067429662
 MonoBehaviour:
