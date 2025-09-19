@@ -11,10 +11,11 @@ public class CustomNetworkManager : NetworkManager
     [SerializeField] private PlayerNetworkController _playerNetworkPrefab;
     public override void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
+        Transform start = GetStartPosition();
+        PlayerNetworkController gamePlayerIstance = Instantiate(_playerNetworkPrefab, start.position, start.rotation);
+
         if (SceneManager.GetActiveScene().name == "Bar")
         {
-            PlayerNetworkController gamePlayerIstance = Instantiate(_playerNetworkPrefab);
-            
             gamePlayerIstance.ConnectionID = conn.connectionId;
             gamePlayerIstance.PlayerID = Players.Count + 1;
             gamePlayerIstance.PlayerSteamID = (ulong)SteamMatchmaking.GetLobbyMemberByIndex
@@ -25,34 +26,29 @@ public class CustomNetworkManager : NetworkManager
     }
     public override void OnServerSceneChanged(string sceneName)
     {
-        base.OnServerSceneChanged(sceneName);
-
-        var startPositions = FindObjectsOfType<NetworkStartPosition>();
-
-        if (startPositions.Length == 0)
+        if (sceneName == "Location") // твоя игровая сцена
         {
-            Debug.LogWarning("No NetworkStartPosition found on scene.");
-            return;
-        }
+            var startPositions = FindObjectsOfType<NetworkStartPosition>();
 
-        int index = 0;
-
-        foreach (var connections in NetworkServer.connections.Values)
-        {
-            if (connections?.identity == null) continue;
-
-            var player = connections.identity.gameObject;
-            var target = startPositions[index % startPositions.Length].transform;
-
-            player.transform.SetPositionAndRotation(target.position, target.rotation);
-            index++;
+            int i = 0;
+            foreach (var conn in NetworkServer.connections.Values)
+            {
+                if (conn.identity != null)
+                {
+                    var player = conn.identity.gameObject;
+                    var pos = startPositions[i % startPositions.Length];
+                    player.transform.SetPositionAndRotation(pos.transform.position, pos.transform.rotation);
+                    i++;
+                }
+            }
         }
     }
 
-    [Server]
 
+    [Server]
     public void StartMatch()
     {
+        Transform start = GetStartPosition();
         ServerChangeScene("Location");
     }
 }
