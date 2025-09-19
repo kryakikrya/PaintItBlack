@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class FirstPersonMovement : MonoBehaviour
+public class FirstPersonMovement : NetworkBehaviour
 {
     public float speed = 5;
 
@@ -17,14 +18,16 @@ public class FirstPersonMovement : MonoBehaviour
 
 
 
-    void Awake()
+    void Start()
     {
         // Get the rigidbody on this.
-        rigidbody = GetComponent<Rigidbody>();
+            if (!isLocalPlayer) return;
+            rigidbody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
+        if (!isLocalPlayer) return;
         // Update IsRunning from input.
         IsRunning = canRun && Input.GetKey(runningKey);
 

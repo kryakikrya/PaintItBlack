@@ -1,8 +1,11 @@
 using Mirror;
 using Steamworks;
+using UnityEngine;
 
 public class PlayerNetworkController : NetworkBehaviour
 {
+    [SerializeField] private GameObject _camera;
+
     [SyncVar(hook = nameof(PlayerNameUpdate))] public string PlayerName;
     
     [SyncVar] public int ConnectionID;
@@ -25,7 +28,9 @@ public class PlayerNetworkController : NetworkBehaviour
 
     private void Start()
     {
+        if (!isLocalPlayer) return;
         DontDestroyOnLoad(this.gameObject);
+        _camera.SetActive(true);
     }
 
     public override void OnStartAuthority()
